@@ -1,0 +1,47 @@
+[
+    {
+        "file": "D:\\\\Users\\\\robmi\\\\Documents\\\\Unreal Projects\\\\Building_Escape\\\\Source\\\\Building_Escape\\\\Building_Escape.Build.cs",
+        "command": "cl.exe @\"D:\\Users\\robmi\\Documents\\Unreal Projects\\Building_Escape\\.vscode\\compileCommands_Default\\Building_Escape.210.rsp\"",
+        "directory": "C:\\Program Files (x86)\\Epic Games\\UE_4.27\\Engine\\Source"
+    },
+    {
+        "file": "D:\\\\Users\\\\robmi\\\\Documents\\\\Unreal Projects\\\\Building_Escape\\\\Source\\\\Building_Escape\\\\Building_Escape.cpp",
+        "command": "cl.exe @\"D:\\Users\\robmi\\Documents\\Unreal Projects\\Building_Escape\\.vscode\\compileCommands_Default\\Building_Escape.210.rsp\"",
+        "directory": "C:\\Program Files (x86)\\Epic Games\\UE_4.27\\Engine\\Source"
+    },
+    {
+        "file": "D:\\\\Users\\\\robmi\\\\Documents\\\\Unreal Projects\\\\Building_Escape\\\\Source\\\\Building_Escape\\\\Building_Escape.h",
+        "command": "cl.exe @\"D:\\Users\\robmi\\Documents\\Unreal Projects\\Building_Escape\\.vscode\\compileCommands_Default\\Building_Escape.210.rsp\"",
+        "directory": "C:\\Program Files (x86)\\Epic Games\\UE_4.27\\Engine\\Source"
+    },
+    {
+        "file": "D:\\\\Users\\\\robmi\\\\Documents\\\\Unreal Projects\\\\Building_Escape\\\\Source\\\\Building_Escape\\\\Building_EscapeGameModeBase.cpp",
+        "command": "cl.exe @\"D:\\Users\\robmi\\Documents\\Unreal Projects\\Building_Escape\\.vscode\\compileCommands_Default\\Building_Escape.210.rsp\"",
+        "directory": "C:\\Program Files (x86)\\Epic Games\\UE_4.27\\Engine\\Source"
+    },
+    {
+        "file": "D:\\\\Users\\\\robmi\\\\Documents\\\\Unreal Projects\\\\Building_Escape\\\\Source\\\\Building_Escape\\\\Building_EscapeGameModeBase.h",
+        "command": "cl.exe @\"D:\\Users\\robmi\\Documents\\Unreal Projects\\Building_Escape\\.vscode\\compileCommands_Default\\Building_Escape.210.rsp\"",
+        "directory": "C:\\Program Files (x86)\\Epic Games\\UE_4.27\\Engine\\Source"
+    },
+    {
+        "file": "D:\\\\Users\\\\robmi\\\\Documents\\\\Unreal Projects\\\\Building_Escape\\\\Source\\\\Building_Escape\\\\OpenDoor.cpp",
+        "command": "cl.exe @\"D:\\Users\\robmi\\Documents\\Unreal Projects\\Building_Escape\\.vscode\\compileCommands_Default\\Building_Escape.210.rsp\"",
+        "directory": "C:\\Program Files (x86)\\Epic Games\\UE_4.27\\Engine\\Source"
+    },
+    {
+        "file": "D:\\\\Users\\\\robmi\\\\Documents\\\\Unreal Projects\\\\Building_Escape\\\\Source\\\\Building_Escape\\\\OpenDoor.h",
+        "command": "cl.exe @\"D:\\Users\\robmi\\Documents\\Unreal Projects\\Building_Escape\\.vscode\\compileCommands_Default\\Building_Escape.210.rsp\"",
+        "directory": "C:\\Program Files (x86)\\Epic Games\\UE_4.27\\Engine\\Source"
+    },
+    {
+        "file": "D:\\\\Users\\\\robmi\\\\Documents\\\\Unreal Projects\\\\Building_Escape\\\\Source\\\\Building_Escape\\\\WorldPosition.cpp",
+        "command": "cl.exe @\"D:\\Users\\robmi\\Documents\\Unreal Projects\\Building_Escape\\.vscode\\compileCommands_Default\\Building_Escape.210.rsp\"",
+        "directory": "C:\\Program Files (x86)\\Epic Games\\UE_4.27\\Engine\\Source"
+    },
+    {
+        "file": "D:\\\\Users\\\\robmi\\\\Documents\\\\Unreal Projects\\\\Building_Escape\\\\Source\\\\Building_Escape\\\\WorldPosition.h",
+        "command": "cl.exe @\"D:\\Users\\robmi\\Documents\\Unreal Projects\\Building_Escape\\.vscode\\compileCommands_Default\\Building_Escape.210.rsp\"",
+        "directory": "C:\\Program Files (x86)\\Epic Games\\UE_4.27\\Engine\\Source"
+    }
+]
