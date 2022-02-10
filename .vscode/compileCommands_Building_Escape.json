@@ -25,6 +25,16 @@
         "directory": "C:\\Program Files (x86)\\Epic Games\\UE_4.27\\Engine\\Source"
     },
     {
+        "file": "D:\\\\Users\\\\robmi\\\\Documents\\\\Unreal Projects\\\\Building_Escape\\\\Source\\\\Building_Escape\\\\Grabber.cpp",
+        "command": "cl.exe @\"D:\\Users\\robmi\\Documents\\Unreal Projects\\Building_Escape\\.vscode\\compileCommands_Building_Escape\\Building_Escape.210.rsp\"",
+        "directory": "C:\\Program Files (x86)\\Epic Games\\UE_4.27\\Engine\\Source"
+    },
+    {
+        "file": "D:\\\\Users\\\\robmi\\\\Documents\\\\Unreal Projects\\\\Building_Escape\\\\Source\\\\Building_Escape\\\\Grabber.h",
+        "command": "cl.exe @\"D:\\Users\\robmi\\Documents\\Unreal Projects\\Building_Escape\\.vscode\\compileCommands_Building_Escape\\Building_Escape.210.rsp\"",
+        "directory": "C:\\Program Files (x86)\\Epic Games\\UE_4.27\\Engine\\Source"
+    },
+    {
         "file": "D:\\\\Users\\\\robmi\\\\Documents\\\\Unreal Projects\\\\Building_Escape\\\\Source\\\\Building_Escape\\\\OpenDoor.cpp",
         "command": "cl.exe @\"D:\\Users\\robmi\\Documents\\Unreal Projects\\Building_Escape\\.vscode\\compileCommands_Building_Escape\\Building_Escape.210.rsp\"",
         "directory": "C:\\Program Files (x86)\\Epic Games\\UE_4.27\\Engine\\Source"
