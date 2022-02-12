@@ -16,7 +16,6 @@ UGrabber::UGrabber()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-
 // Called when the game starts
 void UGrabber::BeginPlay()
 {
@@ -31,95 +30,98 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	FVector PlayerViewPointLocation;
-	FRotator PlayerViewPointRotation;
-
-	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerViewPointLocation, OUT PlayerViewPointRotation);
-
-	FVector LineTraceEnd = PlayerViewPointLocation + (PlayerViewPointRotation.Vector() * Reach);
-
-	// If the physics handle is attached...
+	if (!PhysicsHandle) {return;}
+	// If the physics handle has something grabbed (an object is in the player's grasp)
 	if (PhysicsHandle->GrabbedComponent)
 	{
-		PhysicsHandle->SetTargetLocation(LineTraceEnd);
+		// set the location for that object we're moving around
+		PhysicsHandle->SetTargetLocation(GetPlayersReachPosition());
 	}
 }
 
+// Check to make sure this object has a physics handle component & log an error if it does not
 void UGrabber::FindPhysicsHandle()
 {
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 	
-	if (PhysicsHandle)
+	if (!PhysicsHandle)
 	{
+		UE_LOG(LogTemp, Error, TEXT("%s does not have a valid physics handle!"), *GetOwner()->GetName());
 	} 
-	else
-	{
-		// UE_LOG(LogTemp, Error, TEXT("%s does not have a valid physics handle!"), *GetOwner()->GetName());
-	}
 }
 
+// Bind the Grab & Release functions to the Grab keybind for when it is pressed & released
 void UGrabber::SetupInputComponent()
 {
 	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
 
+	if (!InputComponent) {return;}
 	if (InputComponent)
 	{
-		// UE_LOG(LogTemp, Warning, TEXT("%s has a valid input handle."), *GetOwner()->GetName());
 		InputComponent->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
 		InputComponent->BindAction("Grab", IE_Released, this, &UGrabber::Release);
 	} 
 }
 
-FHitResult UGrabber::GetFirstPhysicsBodyInReach() const
+FVector UGrabber::GetPlayersWorldPosition() const
 {
 	FVector PlayerViewPointLocation;
 	FRotator PlayerViewPointRotation;
 
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerViewPointLocation, OUT PlayerViewPointRotation);
 
-	FVector LineTraceEnd = PlayerViewPointLocation + (PlayerViewPointRotation.Vector() * Reach);
+	return PlayerViewPointLocation;
+}
 
+FVector UGrabber::GetPlayersReachPosition() const
+{
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
+
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerViewPointLocation, OUT PlayerViewPointRotation);
+
+	return (PlayerViewPointLocation + (PlayerViewPointRotation.Vector() * Reach));
+
+}
+
+// Find the grabble object at the location of the player's reach (or return nothing if not grabble or not touching anything)
+FHitResult UGrabber::GetFirstPhysicsBodyInReach() const
+{
 	FHitResult Hit;
 	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
 
+	// Will only generate "hits" on objects that have a physics body component
 	GetWorld()->LineTraceSingleByObjectType(
 		OUT Hit, 
-		PlayerViewPointLocation, 
-		LineTraceEnd, 
+		GetPlayersWorldPosition(), 
+		GetPlayersReachPosition(), 
 		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody), 
 		TraceParameters
 	);
 
-	if (Hit.GetActor())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Actor hit by ray trace: %s"), *Hit.GetActor()->GetName());
-	}
-
 	return Hit;
 }
 
+// Attempt to grab an object when the Grab keybind is pressed
+// Check to see if anything that can be grabbed is present at the player's reach location when pressed
+// If so, attach that object to the physics handle (the player's grasp) so it can be moved around
 void UGrabber::Grab()
 {
-	FVector PlayerViewPointLocation;
-	FRotator PlayerViewPointRotation;
-
-	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerViewPointLocation, OUT PlayerViewPointRotation);
-
-	FVector LineTraceEnd = PlayerViewPointLocation + (PlayerViewPointRotation.Vector() * Reach);
-
-	UE_LOG(LogTemp, Warning, TEXT("Grabber Press."));
 	FHitResult HitResult = GetFirstPhysicsBodyInReach();
 	UPrimitiveComponent* ComponentToGrab = HitResult.GetComponent();
+	AActor* ActorHit = HitResult.GetActor();
 
-	// If we hit something then attach the physics handle.
+	if (!ActorHit) {return;}
+	// If we hit something with the player's reach then attach the physics handle to it (i.e. grab it).
 	if (HitResult.GetActor())
 	{
-		PhysicsHandle->GrabComponentAtLocation(ComponentToGrab, NAME_None, LineTraceEnd);
+		PhysicsHandle->GrabComponentAtLocation(ComponentToGrab, NAME_None, GetPlayersReachPosition());
 	}
 }
 
+// Simply release the object from the physics handle (the player's grasp)
 void UGrabber::Release()
 {
+	if (!PhysicsHandle) {return;}
 	PhysicsHandle->ReleaseComponent();
-	UE_LOG(LogTemp, Warning, TEXT("Grabber Release."));
 }

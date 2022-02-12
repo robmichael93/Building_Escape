@@ -38,4 +38,10 @@ private:
 
 	// Return the first Actor within reach with a physics body.
 	FHitResult GetFirstPhysicsBodyInReach() const;
+
+	// Find the player's location in the world
+	FVector GetPlayersWorldPosition() const;
+
+	// Find the end of the ray cast
+	FVector GetPlayersReachPosition() const;
 };
