@@ -22,10 +22,8 @@ void UOpenDoor::BeginPlay()
 	OpenAngle += InitialYaw;
 	CurrentYaw = InitialYaw;
 	
-	if (!PressurePlate)
-	{
-		UE_LOG(LogTemp, Error, TEXT("Actor %s has the open door component on it, but no pressure plate set!"), *GetOwner()->GetName())
-	}
+	FindPressurePlate();
+	FindAudioComponent();
 }
 
 // Called every frame
@@ -49,9 +47,22 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 void UOpenDoor::OpenDoor(float DeltaTime)
 {
+
 	CurrentYaw = FMath::Lerp(CurrentYaw, OpenAngle, DeltaTime * DoorOpenSpeed);
 	FRotator NewRotation (0.f, CurrentYaw, 0.f);
 	GetOwner()->SetActorRotation(NewRotation);
+
+	if (!AudioComponent) {return;}
+	if (!bHasPlayedOpenSound)
+	{
+		AudioComponent->Play();
+		bHasPlayedOpenSound = true;
+	}
+	
+	if (bHasPlayedCloseSound)
+	{
+		bHasPlayedCloseSound = false;
+	}
 }
 
 void UOpenDoor::CloseDoor(float DeltaTime)
@@ -59,6 +70,37 @@ void UOpenDoor::CloseDoor(float DeltaTime)
 	CurrentYaw = FMath::Lerp(CurrentYaw, InitialYaw, DeltaTime * DoorCloseSpeed);
 	FRotator NewRotation (0.f, CurrentYaw, 0.f);
 	GetOwner()->SetActorRotation(NewRotation);
+
+	if (!AudioComponent) {return;}
+	if (!bHasPlayedCloseSound)
+	{
+		AudioComponent->Play();
+		bHasPlayedCloseSound = true;
+	}
+
+	if (bHasPlayedOpenSound)
+	{
+		bHasPlayedOpenSound = false;
+	}
+}
+
+// Check to make sure this object has a physics handle component & log an error if it does not
+void UOpenDoor::FindAudioComponent()
+{
+	AudioComponent = GetOwner()->FindComponentByClass<UAudioComponent>();
+	
+	if (!AudioComponent)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s does not have a valid audio component!"), *GetOwner()->GetName());
+	} 
+}
+
+void UOpenDoor::FindPressurePlate()
+{
+	if (!PressurePlate)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Actor %s has the open door component on it, but no pressure plate set!"), *GetOwner()->GetName())
+	}
 }
 
 float UOpenDoor::TotalMassOfActors()
